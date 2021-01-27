@@ -76,9 +76,17 @@ def classify_nd(model, nd_images):
     probs = []
     for i, single_preds in enumerate(model_preds):
         single_probs = {}
+        single_probs_binary = {}
         for j, pred in enumerate(single_preds):
             single_probs[categories[j]] = float(pred)
-        probs.append(single_probs)
+
+        single_probs_binary['safe'] = single_probs['drawings'] + single_probs['neutral']
+        single_probs_binary['Not_Safe'] = 1 - single_probs_binary['safe']
+
+        probs.append(single_probs_binary)
+
+
+
     return probs
 
 
